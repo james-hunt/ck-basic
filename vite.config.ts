@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import legacy from '@vitejs/plugin-legacy'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -9,20 +10,10 @@ export default defineConfig({
         plugins: [['babel-plugin-react-compiler']],
       },
     }),
+    legacy({
+      targets: ['safari >= 12'],
+      renderLegacyChunks: true,
+      modernPolyfills: true,
+    }),
   ],
-  build: {
-    target: ['es2018', 'safari12'],
-  },
-  esbuild: {
-    target: 'es2018',
-    supported: {
-      'optional-chaining': false,
-      'nullish-coalescing': false,
-    },
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      target: 'safari12',
-    },
-  },
 })
